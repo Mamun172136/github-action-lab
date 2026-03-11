@@ -1,0 +1,34 @@
+name: basic chekout 
+
+on: 
+  push:
+    branches: 
+      - main
+
+jobs: 
+  basic-checkout: 
+    runs-on: ubuntu-latest
+    env: 
+      CUSTOM_MESSAGE: "hELLO from github actions"
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: list files
+        run: ls -l
+      - name: show system info
+        run: |
+          echo "repository: $GITHUB_REPOSITORY"
+          echo "operating system $(uname -a)"
+          echo "Directory $(pwd)"
+      - name: check version
+        run: |
+          echo "node version $(node --version)"
+          echo "python version $(python --version)"
+      - name: custom message
+        run: echo "$CUSTOM_MESSAGE"
+      - name: conditional statement
+        if: github.event_name == 'push'
+        run: echo "this is triggered by push event"
+          
+       
