@@ -1,0 +1,44 @@
+name: multiple jobs 
+on: 
+  push:
+    branches:
+      - main
+    paths:
+      - "multiple-jobs/**"
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+
+      - name: build application
+        run: |
+          echo "building application"
+          echo "build completed"
+  test:
+    name: run test
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+      
+      - name: test code
+        run: |
+          echo "run test completed"
+          echo "test completed"
+  deploy: 
+    name: deploy application
+    needs: [build, test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: deploy application
+        uses: actions/checkout@v4
+      - name: deploy 
+        run: |
+          echo "deploying application"
+          echo "deployment completed"
+
+    
